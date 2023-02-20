@@ -1,43 +1,57 @@
 <template>
-    <div class="base-button">
-    <v-btn class="mx-2 " :class="[ isActive ? 'bg-red' : 'bg-white']" @click="onClick(sit.name1)">
-        {{ sit.name1}}
-    </v-btn>
-    <v-btn class="mx-2 " :class="[ isActive1 ? 'bg-red' : 'bg-white']" @click="onClick1(sit.name2)">
-        {{ sit.name2}}
+<div class="base-button">
+    <v-btn class="" :class="[ isActive ? 'red' : 'white']" @click="addToCart()">
+        {{ sit.name}}
     </v-btn>
 </div>
 </template>
 
 <script>
+import {
+    mapState
+} from 'vuex';
 export default {
-    name:'base-button',
-    props:['sit'],
+    name: 'base-button',
+    props: ['sit'],
     data() {
         return {
             id: 0,
             isActive: false,
             isActive1: false,
+            count: 0,
         }
     },
-    // computed: {
-    //     ...mapState('buss', {
-    //         sitlist: 'sitlist'
-    //     })
-    // },
+    computed: {
+        ...mapState(['sitlist'])
+    },
 
     methods: {
-        onClick(id) {
-            this.id = id;
-            this.sitlist.push(this.id);
-            this.isActive = !this.isActive;
-        },
-        onClick1(id) {
-            this.id = id;
-            this.sitlist.push(this.id);
-            this.isActive1 = !this.isActive1;
-        }
+        // onClick() {
+        //     this.$store.dispatch("addTicketInList", {
 
+        //         ticket: this.sit,
+        //         quantity: value
+        //     });
+        //     // this.id = id;
+        //     // this.sitlist.push(this.id);
+        //     // console.log(this.sitlist)
+        //     this.isActive = !this.isActive;
+        // },
+        onClick1() {
+            this.id = id;
+            this.sitlist.push(this.id);
+            console.log(this.sitlist)
+            this.isActive1 = !this.isActive1;
+        },
+
+        addToCart() {
+            let value = this.count;
+            this.$store.dispatch("addTicketInList", {
+
+                ticket: this.sit,
+                quantity: value
+            });
+        },
     }
 }
 </script>
